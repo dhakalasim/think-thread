@@ -3,7 +3,7 @@
 import os
 import sys
 
-# This is the main function for manage system part of the backend of the llm management system
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'thinkthread.settings')
