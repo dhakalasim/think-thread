@@ -3,7 +3,9 @@
 import os
 import sys
 
-# This is the main function for the manage part of backend 
+
+# Main function of manage.py
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'thinkthread.settings')
