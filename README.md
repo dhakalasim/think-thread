@@ -2,7 +2,7 @@
 ## LLM wrapper both local and cloud based models
 
 
-- ThinkThread is a flexible AI chatbot app that works both offline and online. Run it locally with Ollama + LLaMA, or connect to the cloud using OpenRouter for access to advanced AI models.
+- ThinkThread is a flexible AI chatbot app that works online. Run it locally with Ollama + LLaMA, or connect to the cloud using OpenRouter for access to advanced AI models.
 
 - Built with a modern stack — React, Django, and MongoDB — ThinkThread is designed for fast, secure, and scalable conversations.
 
