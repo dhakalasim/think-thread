@@ -3,7 +3,7 @@
 import os
 import sys
 
-
+# Main function of manage.py
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'thinkthread.settings')
