@@ -1,0 +1,15 @@
+# docker-compose.yml
+
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # This prevent local node_modules conflicts
+    environment:
+      - CHOKIDAR_USEPOLLING=true  # This is for live reload to work in Docker
