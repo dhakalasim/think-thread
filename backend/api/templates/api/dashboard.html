@@ -15,9 +15,76 @@
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #e3f2fd, #f1f8e9);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .chat-card {
+      max-width: 500px;
+      height: 85vh;
+      margin: auto;
+      margin-top: 30px;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-area {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      background: #fafafa;
+    }
+    .chat-area::-webkit-scrollbar {
+      display: none;
+    }
+    .chat-bubble {
+      padding: 0.8rem 1rem;
+      border-radius: 1.2rem;
+      max-width: 75%;
+      font-size: 0.95rem;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .chat-bubble-user {
+      background-color: #1976d2;
+      color: white;
+      border-bottom-right-radius: 0.3rem;
+    }
+    .chat-bubble-bot {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-bottom-left-radius: 0.3rem;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(4px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    .chat-input {
+      border-top: 1px solid #eee;
+      padding: 0.75rem;
+      background: white;
+    }
+    .input-group .form-control {
+      border-radius: 2rem 0 0 2rem !important;
+    }
+    .input-group .btn {
+      border-radius: 0 2rem 2rem 0 !important;
+    }
+    .top-bar {
+      background: linear-gradient(90deg, #1976d2, #42a5f5);
+      color: white;
+      padding: 0.75rem 1rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-align: center;
+    }
+  </style>
 </head>
-<body class="bg-light">
-  <div id="root" style="height: 100vh;"></div>
+<body>
+  <div id="root"></div>
 
   {% verbatim %}
   <script type="text/babel">
@@ -31,7 +98,6 @@
         if (!input.trim()) return;
         setMessages([...messages, { from: "user", text: input }]);
         setInput("");
-        // Simple fake bot reply after 1 sec
         setTimeout(() => {
           setMessages((prev) => [
             ...prev,
@@ -41,56 +107,41 @@
       };
 
       return (
-        <div className="d-flex flex-column h-100">
-          {/* Top Bar */}
-          <nav className="navbar navbar-dark bg-primary">
-            <div className="container-fluid">
-              <span className="navbar-brand mb-0 h1">Think Thread</span>
-            </div>
-          </nav>
-
-          {/* Chat Area */}
-          <div className="flex-grow-1 d-flex flex-column" style={{ background: "#f9f9f9" }}>
-            <div
-              className="flex-grow-1 overflow-auto p-3"
-              style={{ fontSize: "0.95rem" }}
-            >
-              {messages.map((msg, i) => (
+        <div className="chat-card">
+          <div className="top-bar">Think Thread</div>
+          <div className="chat-area">
+            {messages.map((msg, i) => (
+              <div
+                key={i}
+                className={`d-flex mb-3 ${
+                  msg.from === "user" ? "justify-content-end" : "justify-content-start"
+                }`}
+              >
                 <div
-                  key={i}
-                  className={`mb-3 d-flex ${
-                    msg.from === "user" ? "justify-content-end" : "justify-content-start"
+                  className={`chat-bubble ${
+                    msg.from === "user"
+                      ? "chat-bubble-user"
+                      : "chat-bubble-bot"
                   }`}
                 >
-                  <div
-                    className={`p-3 rounded-3 ${
-                      msg.from === "user"
-                        ? "bg-primary text-white"
-                        : "bg-white border"
-                    }`}
-                    style={{ maxWidth: "70%" }}
-                  >
-                    {msg.text}
-                  </div>
+                  {msg.text}
                 </div>
-              ))}
-            </div>
-
-            {/* Input Box */}
-            <div className="border-top p-3 bg-white">
-              <div className="input-group input-group-lg">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Type your message..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-                />
-                <button className="btn btn-primary" onClick={sendMessage}>
-                  Send
-                </button>
               </div>
+            ))}
+          </div>
+          <div className="chat-input">
+            <div className="input-group input-group-lg">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Type your message..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              />
+              <button className="btn btn-primary" onClick={sendMessage}>
+                Send
+              </button>
             </div>
           </div>
         </div>
